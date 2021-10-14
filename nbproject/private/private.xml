@@ -13,6 +13,8 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/ferlo/Documents/NetBeansProjects/JPA_Libreria/src/jpa_libreria/servicios/ServicioLibro.java</file>
+            <file>file:/C:/Users/ferlo/Documents/NetBeansProjects/JPA_Libreria/src/jpa_libreria/entidades/Autor.java</file>
+            <file>file:/C:/Users/ferlo/Documents/NetBeansProjects/JPA_Libreria/src/jpa_libreria/entidades/Libro.java</file>
             <file>file:/C:/Users/ferlo/Documents/NetBeansProjects/JPA_Libreria/src/jpa_libreria/principal/MainLibreria.java</file>
         </group>
     </open-files>
