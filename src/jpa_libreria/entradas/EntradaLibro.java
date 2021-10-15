@@ -6,6 +6,7 @@
 package jpa_libreria.entradas;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
@@ -28,7 +29,6 @@ public class EntradaLibro {
     AutorDAO daoa = new AutorDAO();
     EntradaAutor ea = new EntradaAutor();
     ServicioAutor sa = new ServicioAutor();
-    //ServicioLibro serli = new ServicioLibro();
     EntradaEditorial ee = new EntradaEditorial();
     String strKey;
     
@@ -49,9 +49,6 @@ public class EntradaLibro {
         Editorial edit = new Editorial();
         edit = findPublisher();
         ubik.setEditorial(edit);
-        if (ubik == null) {
-            ubik = crearLibro();
-        }
         return ubik;
     }
 
@@ -86,9 +83,15 @@ public class EntradaLibro {
             System.out.println("Si desea dar baja al Libro, presione 1.\n"
                 + "Si desea darle el alta, presione 2.\n");
             System.out.println("Ingrese el número de la operación:");
-            op = read.nextByte();
-            if (op > 3 || op < 1) {
-                System.out.println("Ingrese un valor permitido");
+            try {
+                op = read.nextByte();
+                if (op > 3 || op < 1) {
+                    System.out.println("Ingrese un valor permitido");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("Ingrese un valor numérico en el rango establecido");
+                op = 3;
+                read.nextLine();
             }
         } while (op > 2 || op < 1);
         

@@ -10,6 +10,7 @@ import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
+import javax.persistence.NoResultException;
 import jpa_libreria.entidades.Libro;
 import jpa_libreria.entradas.EntradaAutor;
 import jpa_libreria.entradas.EntradaEditorial;
@@ -41,7 +42,7 @@ public class ServicioLibro {
                     + "Si desea consultar uno o más Libros por Editorial, presione 7\n"
                     + "Si desea listar los Libros, presione 8\n"
                     + "Si desea regresar al menú anterior, presione 9");
-                System.out.println("Ingrese el número de la operación que desea realizar:");
+                System.out.println("Ingrese el número del 1 al 9 con la operación que desea realizar:");
                 op = read.nextByte();
                 switch(op) {
                     case 1:
@@ -49,22 +50,19 @@ public class ServicioLibro {
                         daol.crear(ubik);
                         break;
                     case 2:
-                        boolean upd = true;
                         ubik = daol.buscarPorTitulo(el.ingresarNombre());
+                        System.out.println(ubik);
+                        byte op1=0;
                         do {
                             try {
-                                byte op1=0;
-                                System.out.println(ubik);
                                 System.out.println("Si desea modificar el título del Libro, presione 1.\n"
                                     + "Si desea modificar el estado de alta o baja del Libro, presione 2.\n"
                                     + "Si desea modificar la cantidad de libros diponible para prestamos, presione 3.\n"
                                     + "Si desea modificar la Editorial, presione 4.\n"
                                     + "Si desea modificar el Autor, presione 5.\n"
                                     + "Si desea guardar los cambios y volver al menú anterior, presione 6.\n");
-                                do {
-                                    System.out.println("Ingrese el número de la operación que desea realizar:");
-                                    op1 = read.nextByte();
-                                } while (op1 > 3 || op < 1);
+                                System.out.println("Ingrese el número de la operación que desea realizar:");
+                                op1 = read.nextByte();
                                 switch (op1) {
                                     case 1:
                                         ubik.setTitulo(el.ingresarNuevoNombre());
@@ -84,16 +82,16 @@ public class ServicioLibro {
                                         ubik.setAutor(el.findWriter());
                                         break;
                                     case 6:
-                                        System.out.println("Usted regresar al menú anterior");
+                                        System.out.println("Usted regresará al menú anterior");
                                         break;
                                     default:
                                         System.out.println("Ingrese un valor entre 1 y 6");
                                 }
                             } catch (InputMismatchException ex) {
                                 System.out.println("Usted no ingresó un valor numérico.\n");
-                                read.next();
+                                read.nextLine();
                             }
-                        } while (op != 6);
+                        } while (op1 != 6);
                         daol.modificar(ubik);
                         break;
                     case 3:
@@ -102,7 +100,9 @@ public class ServicioLibro {
                         break;
                     case 4:
                         ubik = daol.buscarPorISBN(el.ingresarISBN());
-                        System.out.println(ubik);
+                        if (ubik != null) {
+                            System.out.println(ubik);
+                        }
                         break;
                     case 5:
                         ubik = daol.buscarPorTitulo(el.ingresarNombre());
@@ -137,12 +137,16 @@ public class ServicioLibro {
                     default:
                         System.out.println("Usted no ingresó un número válido.");
                 }
-            }catch (Exception ex) {
-                //System.out.println("Usted no ingresó un valor numérico.\n"
-                        //+ "Elija una operacion nuevamente.");
-                        System.out.println(ex.getMessage());
+            }catch (InputMismatchException ex) {
+                System.out.println("Usted no ingresó un valor numérico.\n"
+                        + "Elija una operacion nuevamente.");
+                        System.out.println("Error: " + ex.toString());
+                        read.nextLine();
+            } catch (NoResultException ex) {
+                System.out.println("La consulta que realizó no arrojó ninguna coincidencia.\n"
+                        + "Revise la lista y repita la operación, o seleccione otra.");
+                        read.nextLine();
             }
         } while (op != 9);
-        System.out.println("Usted ha regresado al menú anterior.");
     }
 }

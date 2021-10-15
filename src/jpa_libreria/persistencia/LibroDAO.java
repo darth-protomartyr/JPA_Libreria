@@ -50,13 +50,26 @@ public class LibroDAO extends DAO{
     }
 
     public Libro buscarPorISBN(Long id){
-        return em.find(Libro.class, id);
+        Libro ubik = new Libro();
+        ubik = em.find(Libro.class, id);
+        if (ubik == null) {
+            System.out.println("El ISBN ingresado no corresponde con ningún Libro ingresado en la Base de Datos");
+            return null;
+        } else {
+            return ubik;
+        }
     }
 
     public Libro buscarPorTitulo(String titulo){
-        Libro ed = (Libro) em.createQuery("SELECT li "
+        Libro ed = new Libro();
+        do {
+            ed = (Libro) em.createQuery("SELECT li "
                 + "FROM Libro li "
                 + "WHERE li.titulo = :titulo ").setParameter("titulo", titulo).getSingleResult();
+            if (ed == null) {
+                System.out.println("El titulo ingresado no pertenece a un Libro que se encuentre en la lista");
+            }
+        }while(ed == null);
         return ed;
     }
 
