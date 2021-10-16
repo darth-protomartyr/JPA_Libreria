@@ -11,10 +11,14 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Scanner;
 import javax.persistence.NoResultException;
+import jpa_libreria.entidades.Autor;
+import jpa_libreria.entidades.Editorial;
 import jpa_libreria.entidades.Libro;
 import jpa_libreria.entradas.EntradaAutor;
 import jpa_libreria.entradas.EntradaEditorial;
 import jpa_libreria.entradas.EntradaLibro;
+import jpa_libreria.persistencia.AutorDAO;
+import jpa_libreria.persistencia.EditorialDAO;
 import jpa_libreria.persistencia.LibroDAO;
 /**
  *
@@ -25,11 +29,15 @@ public class ServicioLibro {
     EntradaLibro el = new EntradaLibro();
     EntradaEditorial ee = new EntradaEditorial();
     EntradaAutor ea = new EntradaAutor();
-    LibroDAO daol = new LibroDAO(); 
+    LibroDAO daol = new LibroDAO();
+    AutorDAO daoa = new AutorDAO();
+    EditorialDAO daoe = new EditorialDAO();
+
     public void managerLibros() throws Exception {
         byte op = 0;
         List<Libro> buks = new ArrayList();
         Libro ubik = new Libro();
+        //List<Editorial> edis = new ArrayList();
         do {
             try {
                     System.out.println("\nAdministrador Libro:\n"
@@ -109,16 +117,48 @@ public class ServicioLibro {
                         System.out.println(ubik);
                         break;
                     case 6:
-                        ubik = (Libro) daol.buscarPorAutor(ea.ingresarNombre());
-                        System.out.println(ubik);
+                        String nom = ea.ingresarNombre();
+                        Autor buk = null;
+                        try {
+                            buk = daoa.buscarPorNombre(nom);
+                        } catch (NoResultException ex) {
+                            System.out.println("El autor que ingresó no se encuentra en la base de datos");                            
+                        }
+                        
+                        if (buk != null) {
+                            buks = daol.buscarPorAutor(nom);
+                            if (buks.size() == 0) {
+                                System.out.println("El autor buscado no tiene ninguna publicación");
+                            } else {
+                                System.out.println("Los Libros del Autor " + nom + " son:");
+                                int counter = 1;
+                                for (Libro ubik1 : buks) {
+                                    System.out.println(counter + ")" + ubik1);
+                                }
+                            }
+                        }
                         break;    
                     case 7:
                         String ed = ee.ingresarNombre();
-                        buks = (List<Libro>) daol.buscarPorEditorial(ed);
-                        System.out.println("Los Libros de la Editorial " + ed + " son:");
-                        int counter = 1;
-                        for (Libro buk : buks) {
-                            System.out.println(counter + ")" + buk);
+                        Editorial edi = null;
+                        try {
+                            edi = daoe.buscarPorNombre(ed);
+                            buks = (List<Libro>) daol.buscarPorEditorial(ed);
+                        } catch (NoResultException ex) {
+                            System.out.println("La editorial ingresada no se encuentra en la base de datos");
+                        }
+                        
+                        if (edi != null) {
+                            buks = daol.buscarPorEditorial(ed);
+                            if (buks.size()==0){
+                                System.out.println("La editorial buscada no tiene ninguna publicación");
+                            } else {
+                            System.out.println("Los Libros de la Editorial " + ed + " son:");
+                                int counter = 1;
+                                for (Libro ubik2 : buks) {
+                                    System.out.println(counter + ")" + ubik2);
+                                }
+                            }
                         }
                         break;                   
                     case 8:
@@ -126,8 +166,8 @@ public class ServicioLibro {
                         Iterator<Libro> it = buks.iterator();
                         int counter1 = 1;
                         while(it.hasNext()) {
-                            Libro buk = it.next();
-                            System.out.println(counter1 + ")" + buk);
+                            Libro ubik2 = it.next();
+                            System.out.println(counter1 + ")" + ubik2);
                             counter1 +=1;
                         }
                         break;

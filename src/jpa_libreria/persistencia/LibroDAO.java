@@ -74,8 +74,7 @@ public class LibroDAO extends DAO{
     }
 
     public List<Libro> buscarPorEditorial(String nom){
-        List<Libro> libros = new ArrayList(); 
-        
+        List<Libro> libros = new ArrayList();  
         libros = (List<Libro>) em.createQuery("SELECT li "
                 + " FROM Libro li"
                 + " WHERE li.editorial.nombre LIKE :nom")
