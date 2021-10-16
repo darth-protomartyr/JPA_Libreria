@@ -37,7 +37,6 @@ public class ServicioLibro {
         byte op = 0;
         List<Libro> buks = new ArrayList();
         Libro ubik = new Libro();
-        //List<Editorial> edis = new ArrayList();
         do {
             try {
                     System.out.println("\nAdministrador Libro:\n"
