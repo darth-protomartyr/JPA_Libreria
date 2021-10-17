@@ -6,6 +6,7 @@
 package jpa_libreria.entidades;
 
 import com.sun.istack.internal.NotNull;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,10 +28,10 @@ public class Libro {
     private Integer ejemplaresRestantes;
     private Boolean alta;
     @NotNull
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Autor autor;
     @NotNull
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     private Editorial editorial;
     public Libro() {
     }

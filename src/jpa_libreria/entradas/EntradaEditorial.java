@@ -6,6 +6,7 @@
 package jpa_libreria.entradas;
 
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import jpa_libreria.entidades.Editorial;
 
@@ -38,12 +39,17 @@ public class EntradaEditorial {
         boolean alta = true;
         byte op = 0;
         do {
-            System.out.println("Si desea dar baja a  la editorial presione 1.\n"
-                + "Si desea darle el alta, presione 2.\n");
-            System.out.println("Ingrese el número de la operación:");
-            op = read.nextByte();
-            if (op > 3 || op < 1) {
-                System.out.println("Ingrese un valor permitido");
+            try {
+                System.out.println("Si desea dar baja a  la editorial presione 1.\n"
+                    + "Si desea darle el alta, presione 2.\n");
+                System.out.println("Ingrese el número de la operación:");
+                op = read.nextByte();
+                if (op > 3 || op < 1) {
+                    System.out.println("Ingrese un valor permitido");
+                }   
+            } catch(InputMismatchException ex) {
+                    System.out.println("No ingresó un valor númérico");
+                    read.nextLine();
             }
         } while (op > 2 || op < 1);
         if (op == 1) {
