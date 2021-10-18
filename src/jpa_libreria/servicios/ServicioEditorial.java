@@ -71,7 +71,7 @@ public class ServicioEditorial {
                                         System.out.println("Ingrese un valor entre 1 y 3");
                                 }
                             } catch (InputMismatchException ex) {
-                                System.out.println("Usted no ingresó un valor numérico1111.\n");
+                                System.out.println("Usted no ingresó un valor numérico.\n");
                                 read.nextLine();
                             }
                         } while(op1 != 3);
@@ -103,10 +103,9 @@ public class ServicioEditorial {
                     default :
                         System.out.println("Ingrese un valor entre 1 y 6");
                 }
-            }catch (InputMismatchException ex) {
-                System.out.println("Usted no ingresó un valor numérico222.\n"
+            } catch (InputMismatchException ex) {
+                System.out.println("Usted no ingresó un valor numérico.\n"
                     + "Elija una operacion nuevamente.");
-                System.out.println("Error: " + ex.toString());
                 read.nextLine();
             } catch (NoResultException ex) {
                 System.out.println("La consulta que realizó no arrojó ninguna coincidencia.\n"

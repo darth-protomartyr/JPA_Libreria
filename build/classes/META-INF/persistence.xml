@@ -3,8 +3,8 @@
   <persistence-unit name="JPA_LibreriaPU" transaction-type="RESOURCE_LOCAL">
     <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
     <class>jpa_libreria.entidades.Autor</class>
-    <class>jpa_libreria.entidades.Editorial</class>
     <class>jpa_libreria.entidades.Libro</class>
+    <class>jpa_libreria.entidades.Editorial</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/libreria?zeroDateTimeBehavior=convertToNull"/>
       <property name="javax.persistence.jdbc.user" value="root"/>
